@@ -39,7 +39,7 @@ class _newCardState extends State<newCard> {
     // if (File(PickedFile!.path) != null) {
     Reference ref = storage.ref().child("image" + DateTime.now().toString());
     if (PickedFile != null) {
-      UploadTask uploadTask = ref.putFile(File(PickedFile!.path));
+      UploadTask uploadTask = ref.putFile(File(PickedFile.path));
 
       uploadTask.whenComplete(() async {
         try {

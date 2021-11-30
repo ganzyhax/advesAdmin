@@ -20,10 +20,11 @@ class Korzina extends StatefulWidget {
 
 class _KorzinaState extends State<Korzina> {
   String? id_final;
-  _save(String url) async {
+
+  Future _saver(String url) async {
     try {
       // Saved with this method.
-      var imageId = await ImageDownloader.downloadImage(url);
+      var imageId = await ImageDownloader.downloadImage('https://firebasestorage.googleapis.com/v0/b/calcium-task-254113.appspot.com/o/image2021-11-28%2015%3A43%3A39.449601?alt=media&token=2c98e989-50ea-4824-9858-ab2f9694bd98.jpeg');
       // if (imageId == null) {
       //   return;
       // }
@@ -274,7 +275,12 @@ class _KorzinaState extends State<Korzina> {
                                 onPressed: () async {
                                   // showLoadingDialog(context);
                                   // Saved with this method.
-                                  _save(image.toString());
+                                  var imageId = await ImageDownloader.downloadImage(image.toString()).then((value) => 
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Фото сохранено!")))
+                                  );
+                                  // var path = await ImageDownloader.findPath(imageId);
+                                  // await ImageDownloader.open(path);
+                                  // _saver(image.toString());
 
                                   // showToast('Image downloaded.');
                                 },
