@@ -22,13 +22,13 @@ class _newCardState extends State<newCard> {
   TextEditingController controllName = new TextEditingController();
   TextEditingController controllTel = new TextEditingController();
   TextEditingController controllEmail = new TextEditingController();
+  TextEditingController controllRazScreen = new TextEditingController();
+  TextEditingController controllTime = new TextEditingController();
+  TextEditingController controllRazVid = new TextEditingController();
   int isLoadImage = 0;
   final picker = ImagePicker();
   chooseFile(ImageSource source) async {
-    setState(() {
-      isLoadImage = 1;
-      imageFile = 'http://simpleicon.com/wp-content/uploads/loading.png';
-    });
+
     final PickedFile = await picker.getImage(
       source: source == 'gallery' ? ImageSource.camera : ImageSource.gallery,
     );
@@ -39,6 +39,10 @@ class _newCardState extends State<newCard> {
     // if (File(PickedFile!.path) != null) {
     Reference ref = storage.ref().child("image" + DateTime.now().toString());
     if (PickedFile != null) {
+      setState(() {
+        isLoadImage = 1;
+        imageFile = 'http://simpleicon.com/wp-content/uploads/loading.png';
+      });
       UploadTask uploadTask = ref.putFile(File(PickedFile.path));
 
       uploadTask.whenComplete(() async {
@@ -135,6 +139,101 @@ class _newCardState extends State<newCard> {
                   ),
                 ),
               ),
+
+
+
+
+
+
+
+
+
+
+
+
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Container(
+                  width: width - 20,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // filled: true,
+                      // fillColor: Color(0xFFF2F2F2),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide:
+                          BorderSide(width: 2, color: Color(0xffC9BEA8)),
+                        ),
+                        border: new OutlineInputBorder(
+                            borderSide:
+                            new BorderSide(color: Color(0xffC9BEA8))),
+                        prefixIcon:
+                        Icon(Icons.people, color: Color(0xffC9BEA8)),
+                        labelText: 'Размер экрана',
+                        labelStyle: TextStyle(color: Colors.black)),
+                    controller: controllRazScreen,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Container(
+                  width: width - 20,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // filled: true,
+                      // fillColor: Color(0xFFF2F2F2),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide:
+                          BorderSide(width: 2, color: Color(0xffC9BEA8)),
+                        ),
+                        border: new OutlineInputBorder(
+                            borderSide:
+                            new BorderSide(color: Color(0xffC9BEA8))),
+                        prefixIcon:
+                        Icon(Icons.people, color: Color(0xffC9BEA8)),
+                        labelText: 'Время транцлияции',
+                        labelStyle: TextStyle(color: Colors.black)),
+                    controller: controllTime,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Container(
+                  width: width - 20,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      // filled: true,
+                      // fillColor: Color(0xFFF2F2F2),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(4)),
+                          borderSide:
+                          BorderSide(width: 2, color: Color(0xffC9BEA8)),
+                        ),
+                        border: new OutlineInputBorder(
+                            borderSide:
+                            new BorderSide(color: Color(0xffC9BEA8))),
+                        prefixIcon:
+                        Icon(Icons.people, color: Color(0xffC9BEA8)),
+                        labelText: 'Разрешение видео',
+                        labelStyle: TextStyle(color: Colors.black)),
+                    controller: controllRazVid,
+                  ),
+                ),
+              ),
+
+
+
+
+
+
+
+
+
+
+
               Padding(
                 padding: const EdgeInsets.only(top: 15),
                 child: Container(
@@ -234,7 +333,7 @@ class _newCardState extends State<newCard> {
                         await firebase.collection('widgets').doc();
                     if (imageFile.toString() != null &&
                         controllName.text.toString() != '' &&
-                        controllEmail.text.toString() != '') {
+                        controllEmail.text.toString() != '' && controllRazVid.text.toString() !='' && controllRazScreen.text.toString()!='' && controllTime.text.toString()!='') {
                       print(imageFile.toString());
                       print(controllName.text);
                       print(controllEmail.text);
@@ -243,6 +342,10 @@ class _newCardState extends State<newCard> {
                         'address': controllName.text.toString(),
                         'text': controllEmail.text.toString(),
                         'id_del': refs.id.toString(),
+                        'razmer':controllRazScreen.text.toString(),
+                        'videoRazmer':controllRazVid.text.toString(),
+                        'time':controllTime.text.toString(),
+
                       }).then((value) => showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -254,6 +357,12 @@ class _newCardState extends State<newCard> {
                                     child: Text('OK'),
                                     onPressed: () async {
                                       Navigator.pop(context, true);
+                                      controllName.text='';
+                                      controllEmail.text='';
+
+                                      controllRazScreen.text='';
+                                      controllRazVid.text='';
+                                      controllTime.text='';
                                     }),
                               ],
                             );

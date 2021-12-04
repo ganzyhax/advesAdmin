@@ -96,9 +96,9 @@ class _KorzinaState extends State<Korzina> {
                         'https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Video_camera_icon.svg/768px-Video_camera_icon.svg.png';
                   }
                   if (location == '1') {
-                    location = 'Atakent';
+                    location = 'Атакент';
                   } else {
-                    location = 'Tolebi 60';
+                    location = 'пр. Жибек Жолы';
                   }
                   return InkWell(
                     onTap: () {
